@@ -19,3 +19,22 @@
 #start,#status{
     font-size: 22px;
 }
+
+.modal-dialog{
+    width: 90%;
+}
+
+.instruction_image{
+    display: inline-block;
+    width: 45%;
+}
+
+h4{
+    background-color: white;
+    line-height: 2;
+    margin: 0px;
+}
+
+canvas{
+    margin-left: 319px;
+}
