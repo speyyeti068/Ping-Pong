@@ -1,4 +1,6 @@
-
+WristX = "";
+WristY = "";
+WristScore = 0;
 /*created by prashant shukla */
 
 var paddle2 =10,paddle1=10;
@@ -24,7 +26,8 @@ var ball = {
 function setup(){
   var canvas =  createCanvas(700,600);
   video = createCapture(VIDEO);
-  video.size(650,500)
+  video.size(450,300);
+  video.parent("game_console")
 
   poseNet = ml5.poseNet(video,function(){
     console.log("Model Loaded");
@@ -34,15 +37,17 @@ function setup(){
 
 function gotPoses(results){
   if(results.length>0){
-    noseX = results[0].pose.nose.x
-    noseY = results[0].pose.nose.y
-    console.log("Nose X = " + noseX + ", Nose Y = " + noseY);
+    WristX = results[0].pose.rightWrist.x;
+    WristY = results[0].pose.rightWrist.y;
+    console.log(WristX + ", " + WristY);
   }
 }
 
 function draw(){
-  if(noseX<325){
-    
+  if(wristScore>0.2){
+    fill("#FF0000");
+    stroke("#FF0000");
+    circle(WristX,WristY,20);
   }
 
  background(0); 
