@@ -1,6 +1,7 @@
 WristX = "";
 WristY = "";
 WristScore = 0;
+gameStatus = "";
 /*created by prashant shukla */
 
 var paddle2 =10,paddle1=10;
@@ -21,6 +22,12 @@ var ball = {
     r:20,
     dx:3,
     dy:3
+}
+
+function startGame(){
+  gameStatus = "start";
+
+  document.getElementById("status").innerHTML = "Game Is Loading";
 }
 
 function setup(){
@@ -44,6 +51,8 @@ function gotPoses(results){
 }
 
 function draw(){
+  if(gameStatus == "start"){
+    
   if(wristScore>0.2){
     fill("#FF0000");
     stroke("#FF0000");
@@ -87,6 +96,7 @@ function draw(){
    
    //function move call which in very important
     move();
+  }
 }
 
 
