@@ -58,7 +58,7 @@ function gotPoses(results){
 function draw(){
   if(gameStatus == "start"){
    
-  if(wristScore>0.2){
+  if(WristScore>0.2){
     fill("#FF0000");
     stroke("#FF0000");
     circle(WristX,WristY,20);
