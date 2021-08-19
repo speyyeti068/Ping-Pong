@@ -30,6 +30,11 @@ function startGame(){
   document.getElementById("status").innerHTML = "Game Is Loading";
 }
 
+function preload(){
+  ball_contact = loadSound("ball_touch_paddel.wav");
+  missed = loadSound("missed.wav");
+}
+
 function setup(){
   var canvas =  createCanvas(700,600);
   video = createCapture(VIDEO);
@@ -52,14 +57,14 @@ function gotPoses(results){
 
 function draw(){
   if(gameStatus == "start"){
-    
+   
   if(wristScore>0.2){
     fill("#FF0000");
     stroke("#FF0000");
     circle(WristX,WristY,20);
   }
 
- background(0); 
+ background(0);
 
  fill("black");
  stroke("black");
@@ -69,14 +74,14 @@ function draw(){
  stroke("black");
  rect(0,0,20,700);
  
-   //funtion paddleInCanvas call 
+   //funtion paddleInCanvas call
    paddleInCanvas();
  
    //left paddle
    fill(250,0,0);
     stroke(0,0,250);
     strokeWeight(0.5);
-   paddle1Y = mouseY; 
+   paddle1Y = WristY;
    rect(paddle1X,paddle1Y,paddle1,paddle1Height,100);
    
    
@@ -84,11 +89,11 @@ function draw(){
     fill("#FFA500");
     stroke("#FFA500");
    var paddle2y =ball.y-paddle2Height/2;  rect(paddle2Y,paddle2y,paddle2,paddle2Height,100);
-    
+   
     //function midline call
     midline();
-    
-    //funtion drawScore call 
+   
+    //funtion drawScore call
    drawScore();
    
    //function models call  
@@ -144,14 +149,16 @@ function move(){
    ball.x = ball.x + ball.dx;
    ball.y = ball.y + ball.dy;
    if(ball.x+ball.r>width-ball.r/2){
-       ball.dx=-ball.dx-0.5;       
+       ball.dx=-ball.dx-0.5;      
    }
   if (ball.x-2.5*ball.r/2< 0){
   if (ball.y >= paddle1Y&& ball.y <= paddle1Y + paddle1Height) {
-    ball.dx = -ball.dx+0.5; 
+    ball.dx = -ball.dx+0.5;
+    ball_contact.play();
   }
   else{
     pcscore++;
+    missed.play();
     reset();
     navigator.vibrate(100);
   }
@@ -164,17 +171,22 @@ if(pcscore ==4){
     stroke("white");
     textSize(25)
     text("Game Over!☹☹",width/2,height/2);
-    text("Reload The Page!",width/2,height/2+30)
+    text("Press Restart Button To Play Again!",width/2,height/2+30)
     noLoop();
     pcscore = 0;
 }
    if(ball.y+ball.r > height || ball.y-ball.r <0){
        ball.dy =- ball.dy;
-   }   
+   }  
 }
 
+function restartGame(){
+  pcscore = 0;
+  playerscore = 0;
+  loop();
+}
 
-//width height of canvas speed of ball 
+//width height of canvas speed of ball
 function models(){
     textSize(18);
     fill(255);
